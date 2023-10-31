@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts } from "../../store/utils/thunks";
 import { Button, Spinner } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import Moment from "react-moment";
 
 import Masonry from 'react-masonry-css';
 
@@ -42,7 +43,7 @@ const HomePosts = () =>{
                             />
                             <div className="author">
                                 <span>{item.author} - </span>
-                                {item.createdAt}
+                                <Moment format="DD MMMM">{item.createdAt}</Moment>
                             </div>
                             <div className="content">
                                 <div className="title">{item.title}</div>
