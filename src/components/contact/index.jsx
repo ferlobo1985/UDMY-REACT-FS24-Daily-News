@@ -1,9 +1,11 @@
 import { useFormik } from "formik";
 import * as Yup from 'yup';
 import { Alert } from 'react-bootstrap';
+import { useDispatch } from "react-redux";
+import { sendMessage } from "../../store/utils/thunks";
 
 const Contact = () => {
-
+    const dispatch =  useDispatch();
     const formik = useFormik({
         initialValues:{email:'',firstname:'',lastname:'',message:''},
         validationSchema:Yup.object({
@@ -19,7 +21,17 @@ const Contact = () => {
             .max(500,'Sorry the message is too lang')
         }),
         onSubmit:(values,{ resetForm })=>{
-            console.log(values);
+           
+            dispatch(sendMessage(values))
+            .unwrap()
+            .then(response=>{
+                resetForm();
+                console.log(response)
+            })
+            .catch(err=>{
+                console.log('Error')
+            })
+
         }
     })
 
