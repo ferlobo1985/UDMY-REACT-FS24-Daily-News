@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-/// import {} from '../utils/thunks';
+import { fetchPosts } from '../utils/thunks';
 
 
 export const postsSlice = createSlice({
@@ -10,7 +10,20 @@ export const postsSlice = createSlice({
             items:[]
         }
     },
-    reducers:{}
+    reducers:{},
+    extraReducers:(builder)=>{
+        builder
+        .addCase(fetchPosts.pending,(state)=>{
+            state.loading = true;
+        })
+        .addCase(fetchPosts.fulfilled,(state,action)=>{
+            state.loading = false;
+            state.articles = action.payload;
+        })
+        .addCase(fetchPosts.rejected,(state)=>{
+            state.loading = false;
+        })
+    }
 });
 
 
